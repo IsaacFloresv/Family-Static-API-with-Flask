@@ -40,7 +40,10 @@ def handle_member_by_id(member_id):
 
     if request.method == 'GET':
         response_body = jackson_family.get_member(id)
-        return jsonify(response_body), 200
+        if response_body == None:
+            return jsonify({"msg": "still no born"}), 400
+        else:
+            return jsonify(response_body), 200
 
     if request.method == 'DELETE':
         result = jackson_family.delete_member(id)
@@ -50,6 +53,7 @@ def handle_member_by_id(member_id):
             "done": True
         }
         return jsonify(response_body), 200
+
 
 @app.route('/member', methods=['POST'])
 def handle_add_member():
